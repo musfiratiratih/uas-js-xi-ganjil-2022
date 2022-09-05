@@ -1,0 +1,54 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let checkout = false;
+			let menus = [
+				{ name: "Bakso", price: 10000 },
+				{ name: "Mie Ayam", price: 8000 },
+				{ name: "Rawon", price: 8000 },
+				{ name: "Nasi Pecel", price: 7000 },
+				{ name: "Kupang", price: 13000 },
+			];
+			let pilihan = [];
+
+			while (!checkout) {
+				let menuMessage = "Silahkan pilih menu dibawah ini:\n";
+				for (const [index, menu] of menus.entries()) {
+					menuMessage += `${index + 1}. ${menu.name} (Rp. ${menu.price.toLocaleString()})\n`;
+				}
+				menuMessage += "0. Checkout!\n";
+				menuMessage += "================================\n";
+				menuMessage += `Menu yg dipilih: (${pilihan.join(", ")})`;
+
+				const pilih = +prompt(menuMessage);
+				if (pilih >= 1 && pilih <= menus.length) pilihan.push(pilih);
+				else checkout = true;
+			}
+
+			let summaryMessage = "Pesanan anda:\n";
+			let totalPrice = 0;
+			for (const [index, pilih] of pilihan.entries()) {
+				const price = menus[pilih - 1].price;
+				totalPrice += price;
+
+				summaryMessage += `${index + 1}. ${menus[pilih - 1].name} ($p. ${price.toLocaleString()})\n`;
+			}
+			summaryMessage += `Total: Rp. ${totalPrice.toLocaleString()}\n`;
+			summaryMessage += `Bayar: `;
+
+			const bayar = +prompt(summaryMessage);
+
+			if (bayar > totalPrice) {
+				confirm(`Charge: Rp. ${(bayar - totalPrice).toLocaleString()}`);
+			} else {
+				alert("Uang anda kurang!");
+			}
+		</script>
+	</body>
+</html>
